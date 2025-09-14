@@ -202,11 +202,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : EventsWidget(),
         ),
         FFRoute(
-          name: LocationWidget.routeName,
-          path: LocationWidget.routePath,
-          builder: (context, params) => LocationWidget(),
-        ),
-        FFRoute(
           name: ServicesWidget.routeName,
           path: ServicesWidget.routePath,
           builder: (context, params) => params.isEmpty
@@ -226,6 +221,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: TempAdminWidget.routeName,
+          path: TempAdminWidget.routePath,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'TempAdmin')
+              : TempAdminWidget(),
+        ),
+        FFRoute(
+          name: LocationWidget.routeName,
+          path: LocationWidget.routePath,
+          builder: (context, params) => LocationWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

@@ -22,7 +22,8 @@ export '/money/books_purchased/books_purchased_widget.dart'
 export '/money/view_purchase/view_purchase_widget.dart' show ViewPurchaseWidget;
 export '/pages/about_us/about_us_widget.dart' show AboutUsWidget;
 export '/pages/events/events_widget.dart' show EventsWidget;
-export '/pages/location/location_widget.dart' show LocationWidget;
 export '/pages/services/services_widget.dart' show ServicesWidget;
 export '/money/donation_confirmation/donation_confirmation_widget.dart'
     show DonationConfirmationWidget;
+export '/temp_admin/temp_admin_widget.dart' show TempAdminWidget;
+export '/pages/location/location_widget.dart' show LocationWidget;

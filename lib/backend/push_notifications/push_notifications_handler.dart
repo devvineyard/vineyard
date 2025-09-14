@@ -138,7 +138,6 @@ final parametersBuilderMap =
       ),
   'AboutUs': ParameterData.none(),
   'Events': ParameterData.none(),
-  'Location': ParameterData.none(),
   'Services': ParameterData.none(),
   'DonationConfirmation': (data) async => ParameterData(
         allParams: {
@@ -146,6 +145,8 @@ final parametersBuilderMap =
           'ref': getParameter<String>(data, 'ref'),
         },
       ),
+  'TempAdmin': ParameterData.none(),
+  'Location': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

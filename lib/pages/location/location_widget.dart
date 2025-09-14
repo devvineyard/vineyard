@@ -91,7 +91,7 @@ class _LocationWidgetState extends State<LocationWidget> {
                   controller: _model.googleMapsController,
                   onCameraIdle: (latLng) => _model.googleMapsCenter = latLng,
                   initialLocation: _model.googleMapsCenter ??=
-                      FFAppState().ChurchLocation!,
+                      FFAppState().ChurchLocations.firstOrNull!,
                   markers: FFAppState()
                       .ChurchLocations
                       .map(
@@ -104,7 +104,7 @@ class _LocationWidgetState extends State<LocationWidget> {
                   markerColor: GoogleMarkerColor.violet,
                   mapType: MapType.normal,
                   style: GoogleMapStyle.standard,
-                  initialZoom: 14.0,
+                  initialZoom: 6.0,
                   allowInteraction: true,
                   allowZoom: true,
                   showZoomControls: true,

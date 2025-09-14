@@ -10,7 +10,7 @@ import GoogleMaps
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GMSServices.provideAPIKey("AIzaSyDJCj8m4ZvSc9f5tjVrslYjn4ERzdZ4OlI")
+    GMSServices.provideAPIKey("AIzaSyBndgRhy0wz0PxVAHpv44pJu_zs2NvQzes")
     GeneratedPluginRegistrant.register(with: self)
     BTAppContextSwitcher.setReturnURLScheme("com.mycompany.vineyardcomplete.braintree")
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

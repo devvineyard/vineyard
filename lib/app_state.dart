@@ -40,7 +40,7 @@ class FFAppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
-  LatLng? _ChurchLocation = LatLng(-26.102312059620225, 27.77585606270416);
+  LatLng? _ChurchLocation = LatLng(-26.102312, 27.775856);
   LatLng? get ChurchLocation => _ChurchLocation;
   set ChurchLocation(LatLng? value) {
     _ChurchLocation = value;
@@ -97,11 +97,11 @@ class FFAppState extends ChangeNotifier {
   }
 
   List<LatLng> _ChurchLocations = [
-    LatLng(-26.102312059620225, 27.77585606270416),
-    LatLng(-28.521299366217445, 28.825236817857046),
-    LatLng(-22.63842660219427, 30.83353889992813),
-    LatLng(-28.27277626907286, 29.127689998754587),
-    LatLng(-28.548501017900918, 28.874580490493443)
+    LatLng(-26.102312, 27.775856),
+    LatLng(-28.521299, 28.825237),
+    LatLng(-22.638427, 30.833539),
+    LatLng(-28.272776, 29.12769),
+    LatLng(-28.548501, 28.874581)
   ];
   List<LatLng> get ChurchLocations => _ChurchLocations;
   set ChurchLocations(List<LatLng> value) {
