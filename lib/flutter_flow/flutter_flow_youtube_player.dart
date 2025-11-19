@@ -138,6 +138,7 @@ class _FlutterFlowYoutubePlayerState extends State<FlutterFlowYoutubePlayer>
         videoId: videoId,
         autoPlay: widget.autoPlay,
         params: YoutubePlayerParams(
+          origin: 'https://www.youtube-nocookie.com',
           mute: widget.mute,
           loop: widget.looping,
           showControls: widget.showControls,

@@ -25,5 +25,6 @@ export '/pages/events/events_widget.dart' show EventsWidget;
 export '/pages/services/services_widget.dart' show ServicesWidget;
 export '/money/donation_confirmation/donation_confirmation_widget.dart'
     show DonationConfirmationWidget;
-export '/temp_admin/temp_admin_widget.dart' show TempAdminWidget;
 export '/pages/location/location_widget.dart' show LocationWidget;
+export '/login/phone_sign_in/phone_sign_in_widget.dart' show PhoneSignInWidget;
+export '/login/verify_pin/verify_pin_widget.dart' show VerifyPinWidget;

@@ -18,11 +18,11 @@ class UploadEventModel extends FlutterFlowModel<UploadEventWidget> {
 
   bool isDataUploading_uploadDataLlz = false;
   FFUploadedFile uploadedLocalFile_uploadDataLlz =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataJvi = false;
   FFUploadedFile uploadedLocalFile_uploadDataJvi =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataJvi = '';
 
   @override

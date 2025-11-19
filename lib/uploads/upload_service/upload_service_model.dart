@@ -18,11 +18,11 @@ class UploadServiceModel extends FlutterFlowModel<UploadServiceWidget> {
 
   bool isDataUploading_uploadDataLocal = false;
   FFUploadedFile uploadedLocalFile_uploadDataLocal =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataFirebase = false;
   FFUploadedFile uploadedLocalFile_uploadDataFirebase =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataFirebase = '';
 
   @override

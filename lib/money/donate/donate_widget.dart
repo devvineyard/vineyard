@@ -1549,12 +1549,35 @@ class _DonateWidgetState extends State<DonateWidget> {
                         ),
                         FFButtonWidget(
                           onPressed: () async {
+                            var _shouldSetState = false;
+                            if ((currentUserEmail == null ||
+                                    currentUserEmail == '') &&
+                                (currentPhoneNumber == null ||
+                                    currentPhoneNumber == '')) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'You need an account to donate. Please create one, or log into an existing one.',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 10000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
+                              );
+                              if (_shouldSetState) safeSetState(() {});
+                              return;
+                            }
                             _model.isFormValid = true;
                             if (_model.formKey.currentState == null ||
                                 !_model.formKey.currentState!.validate()) {
                               safeSetState(() => _model.isFormValid = false);
                               return;
                             }
+                            _shouldSetState = true;
                             if (_model.isFormValid!) {
                               final transacAmount = _model.amount!;
                               final transacDisplayName =
@@ -1601,6 +1624,8 @@ class _DonateWidgetState extends State<DonateWidget> {
                               _model.transactionId =
                                   paymentResponse.transactionId!;
 
+                              _shouldSetState = true;
+
                               context.goNamed(
                                 DonationConfirmationWidget.routeName,
                                 queryParameters: {
@@ -1631,7 +1656,7 @@ class _DonateWidgetState extends State<DonateWidget> {
                               );
                             }
 
-                            safeSetState(() {});
+                            if (_shouldSetState) safeSetState(() {});
                           },
                           text: 'Donate Now',
                           options: FFButtonOptions(

@@ -223,16 +223,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: TempAdminWidget.routeName,
-          path: TempAdminWidget.routePath,
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'TempAdmin')
-              : TempAdminWidget(),
-        ),
-        FFRoute(
           name: LocationWidget.routeName,
           path: LocationWidget.routePath,
           builder: (context, params) => LocationWidget(),
+        ),
+        FFRoute(
+          name: PhoneSignInWidget.routeName,
+          path: PhoneSignInWidget.routePath,
+          builder: (context, params) => PhoneSignInWidget(),
+        ),
+        FFRoute(
+          name: VerifyPinWidget.routeName,
+          path: VerifyPinWidget.routePath,
+          builder: (context, params) => VerifyPinWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

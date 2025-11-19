@@ -143,6 +143,12 @@ class FFAppState extends ChangeNotifier {
         _ChurchLocations.map((x) => x.serialize()).toList());
   }
 
+  String _phone = '';
+  String get phone => _phone;
+  set phone(String value) {
+    _phone = value;
+  }
+
   final _eventsManager = StreamRequestManager<List<EventsRecord>>();
   Stream<List<EventsRecord>> events({
     String? uniqueQueryKey,

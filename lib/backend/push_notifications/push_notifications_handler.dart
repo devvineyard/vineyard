@@ -145,8 +145,9 @@ final parametersBuilderMap =
           'ref': getParameter<String>(data, 'ref'),
         },
       ),
-  'TempAdmin': ParameterData.none(),
   'Location': ParameterData.none(),
+  'PhoneSignIn': ParameterData.none(),
+  'VerifyPin': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {
