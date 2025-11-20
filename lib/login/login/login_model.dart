@@ -17,6 +17,8 @@ import 'package:provider/provider.dart';
 class LoginModel extends FlutterFlowModel<LoginWidget> {
   ///  State fields for stateful widgets in this page.
 
+  final formKey2 = GlobalKey<FormState>();
+  final formKey1 = GlobalKey<FormState>();
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
@@ -29,26 +31,69 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   TextEditingController? emailAddressCreateTextController;
   String? Function(BuildContext, String?)?
       emailAddressCreateTextControllerValidator;
+  String? _emailAddressCreateTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Please enter a valid email address';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'Has to be a valid email address.';
+    }
+    return null;
+  }
+
   // State field(s) for password_Create widget.
   FocusNode? passwordCreateFocusNode;
   TextEditingController? passwordCreateTextController;
   late bool passwordCreateVisibility;
   String? Function(BuildContext, String?)?
       passwordCreateTextControllerValidator;
+  String? _passwordCreateTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Please enter your password';
+    }
+
+    return null;
+  }
+
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressTextController;
   String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
+  String? _emailAddressTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Please enter a valid email address';
+    }
+
+    return null;
+  }
+
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
+  String? _passwordTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Please enter your password';
+    }
+
+    return null;
+  }
 
   @override
   void initState(BuildContext context) {
+    emailAddressCreateTextControllerValidator =
+        _emailAddressCreateTextControllerValidator;
     passwordCreateVisibility = false;
+    passwordCreateTextControllerValidator =
+        _passwordCreateTextControllerValidator;
+    emailAddressTextControllerValidator = _emailAddressTextControllerValidator;
     passwordVisibility = false;
+    passwordTextControllerValidator = _passwordTextControllerValidator;
   }
 
   @override
