@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -1132,18 +1131,6 @@ class _ViewPurchaseWidgetState extends State<ViewPurchaseWidget> {
                                             },
                                           ),
                                         });
-                                        triggerPushNotification(
-                                          notificationTitle:
-                                              'Pep Delivery Started!',
-                                          notificationText:
-                                              'The delivery process for the book you purchased has commenced. Please check your SMS messages regularly to ensure you do not miss any important updates.',
-                                          notificationSound: 'default',
-                                          userRefs: [
-                                            widget!.cartItem!.userRef!
-                                          ],
-                                          initialPageName: 'OrderHistory',
-                                          parameterData: {},
-                                        );
                                         context.safePop();
                                       }
                                     },
