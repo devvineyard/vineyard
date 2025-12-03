@@ -245,7 +245,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: DonationConfirmationURLWidget.routeName,
           path: DonationConfirmationURLWidget.routePath,
+          requireAuth: true,
           builder: (context, params) => DonationConfirmationURLWidget(),
+        ),
+        FFRoute(
+          name: PaymentWidget.routeName,
+          path: PaymentWidget.routePath,
+          builder: (context, params) => PaymentWidget(
+            url: params.getParam(
+              'url',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: DebugWidget.routeName,
+          path: DebugWidget.routePath,
+          builder: (context, params) =>
+              params.isEmpty ? NavBarPage(initialPage: 'debug') : DebugWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

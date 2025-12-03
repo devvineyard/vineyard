@@ -163,6 +163,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'Books': BooksWidget(),
       'Events': EventsWidget(),
       'Services': ServicesWidget(),
+      'debug': DebugWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -236,6 +237,14 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Services',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.bug_report,
+              size: 24.0,
+            ),
+            label: 'Debug',
             tooltip: '',
           )
         ],

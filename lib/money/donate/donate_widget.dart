@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -1561,14 +1560,38 @@ class _DonateWidgetState extends State<DonateWidget> {
                               safeSetState(() => _model.isFormValid = false);
                               return;
                             }
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return WebViewAware(
+                                      child: AlertDialog(
+                                        title: Text('See this'),
+                                        content: Text(
+                                            'vineyardcomplete://vineyardcomplete.com${GoRouterState.of(context).uri.toString()}'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext, false),
+                                            child: Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext, true),
+                                            child: Text('Confirm'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ) ??
+                                false;
                             if (_model.isFormValid!) {
                               _model.apiResult =
                                   await InitializeTransactionCall.call(
                                 apiKey:
                                     'sk_test_cf51228f84021b7728e907d110f63fc97f87409f',
                                 email: _model.emailTextController.text,
-                                amount: functions.incrementCartTotalValue(
-                                    100.0, _model.amount!),
+                                amount: (_model.amount!) * 100,
                                 cURL:
                                     'vineyardcomplete://vineyardcomplete.com/DonationConfirmationURL',
                               );
@@ -1621,9 +1644,18 @@ class _DonateWidgetState extends State<DonateWidget> {
                                     },
                                   ),
                                 });
-                                await launchURL(InitializeTransactionCall.url(
-                                  (_model.apiResult?.jsonBody ?? ''),
-                                )!);
+
+                                context.pushNamed(
+                                  PaymentWidget.routeName,
+                                  queryParameters: {
+                                    'url': serializeParam(
+                                      InitializeTransactionCall.url(
+                                        (_model.apiResult?.jsonBody ?? ''),
+                                      ),
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
