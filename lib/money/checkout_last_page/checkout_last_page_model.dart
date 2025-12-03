@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/braintree/payment_manager.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -54,6 +53,21 @@ class CheckoutLastPageModel extends FlutterFlowModel<CheckoutLastPageWidget> {
     return null;
   }
 
+  // State field(s) for email widget.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
+  String? _emailTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Please enter  your email address.';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'Has to be a valid email address.';
+    }
+    return null;
+  }
+
   // State field(s) for id widget.
   FocusNode? idFocusNode;
   TextEditingController? idTextController;
@@ -87,8 +101,6 @@ class CheckoutLastPageModel extends FlutterFlowModel<CheckoutLastPageWidget> {
   bool? checkboxValue;
   // Stores action output result for [Validate Form] action in Button widget.
   bool? validationResult;
-  // Stores action output result for [Braintree Payment] action in Button widget.
-  String? transactionId;
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
   List<CartRecord>? cartList;
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
@@ -98,6 +110,7 @@ class CheckoutLastPageModel extends FlutterFlowModel<CheckoutLastPageWidget> {
   void initState(BuildContext context) {
     fullNameTextControllerValidator = _fullNameTextControllerValidator;
     phoneNumberTextControllerValidator = _phoneNumberTextControllerValidator;
+    emailTextControllerValidator = _emailTextControllerValidator;
     idTextControllerValidator = _idTextControllerValidator;
     addressTextControllerValidator = _addressTextControllerValidator;
   }
@@ -109,6 +122,9 @@ class CheckoutLastPageModel extends FlutterFlowModel<CheckoutLastPageWidget> {
 
     phoneNumberFocusNode?.dispose();
     phoneNumberTextController?.dispose();
+
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
 
     idFocusNode?.dispose();
     idTextController?.dispose();

@@ -6,6 +6,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
+import '/backend/schema/enums/enums.dart';
+
 import '/auth/base_auth_user_provider.dart';
 
 import '/main.dart';
@@ -234,6 +236,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: VerifyPinWidget.routeName,
           path: VerifyPinWidget.routePath,
           builder: (context, params) => VerifyPinWidget(),
+        ),
+        FFRoute(
+          name: OrderHistoryURLWidget.routeName,
+          path: OrderHistoryURLWidget.routePath,
+          builder: (context, params) => OrderHistoryURLWidget(),
+        ),
+        FFRoute(
+          name: DonationConfirmationURLWidget.routeName,
+          path: DonationConfirmationURLWidget.routePath,
+          builder: (context, params) => DonationConfirmationURLWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

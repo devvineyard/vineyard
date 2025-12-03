@@ -219,7 +219,7 @@ class _DonationConfirmationWidgetState
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Reference:',
+                                    'Payment Reference:',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

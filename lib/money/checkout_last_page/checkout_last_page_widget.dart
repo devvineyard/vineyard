@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/braintree/payment_manager.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -43,6 +42,9 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
     _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
     _model.phoneNumberFocusNode!.addListener(() => safeSetState(() {}));
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
+    _model.emailFocusNode!.addListener(() => safeSetState(() {}));
     _model.idTextController ??= TextEditingController();
     _model.idFocusNode ??= FocusNode();
     _model.idFocusNode!.addListener(() => safeSetState(() {}));
@@ -184,6 +186,7 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
                                     controller: _model.fullNameTextController,
                                     focusNode: _model.fullNameFocusNode,
                                     autofocus: true,
+                                    autofillHints: [AutofillHints.name],
                                     textCapitalization:
                                         TextCapitalization.words,
                                     obscureText: false,
@@ -519,6 +522,174 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
                                     ],
                                   ),
                                   TextFormField(
+                                    controller: _model.emailTextController,
+                                    focusNode: _model.emailFocusNode,
+                                    autofocus: true,
+                                    autofillHints: [AutofillHints.email],
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Email',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .override(
+                                            font: GoogleFonts.interTight(
+                                              fontWeight: FontWeight.normal,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMedium
+                                                    .fontStyle,
+                                          ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                      errorStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            fontSize: 12.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: (_model
+                                                  .emailFocusNode?.hasFocus ??
+                                              false)
+                                          ? FlutterFlowTheme.of(context).accent1
+                                          : FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 20.0, 16.0, 20.0),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyLarge
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyLarge
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyLarge
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyLarge
+                                                  .fontStyle,
+                                        ),
+                                    keyboardType: TextInputType.emailAddress,
+                                    cursorColor:
+                                        FlutterFlowTheme.of(context).primary,
+                                    validator: _model
+                                        .emailTextControllerValidator
+                                        .asValidator(context),
+                                    inputFormatters: [
+                                      if (!isAndroid && !isiOS)
+                                        TextInputFormatter.withFunction(
+                                            (oldValue, newValue) {
+                                          return TextEditingValue(
+                                            selection: newValue.selection,
+                                            text: newValue.text
+                                                .toCapitalization(
+                                                    TextCapitalization.words),
+                                          );
+                                        }),
+                                    ],
+                                  ),
+                                  TextFormField(
                                     controller: _model.idTextController,
                                     focusNode: _model.idFocusNode,
                                     autofocus: true,
@@ -669,7 +840,7 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
                                                   .bodyLarge
                                                   .fontStyle,
                                         ),
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType: TextInputType.number,
                                     cursorColor:
                                         FlutterFlowTheme.of(context).primary,
                                     validator: _model.idTextControllerValidator
@@ -691,6 +862,9 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
                                     controller: _model.addressTextController,
                                     focusNode: _model.addressFocusNode,
                                     autofocus: true,
+                                    autofillHints: [
+                                      AutofillHints.fullStreetAddress
+                                    ],
                                     textCapitalization:
                                         TextCapitalization.words,
                                     obscureText: false,
@@ -958,62 +1132,6 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
                                       return;
                                     }
                                     if (_model.validationResult!) {
-                                      final transacAmount = computeTotal(
-                                        FFAppState().cartTotal,
-                                        shippingCost: 100.0,
-                                      );
-                                      final transacDisplayName =
-                                          'Vineyard Books ${dateTimeFormat(
-                                        "d/M H:mm",
-                                        getCurrentTimestamp,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )}';
-                                      if (kIsWeb) {
-                                        showSnackbar(context,
-                                            'Payments not yet supported on web.');
-                                        return;
-                                      }
-
-                                      final dropInRequest =
-                                          BraintreeDropInRequest(
-                                        cardEnabled: true,
-                                        clientToken: braintreeClientToken(),
-                                        collectDeviceData: true,
-                                        paypalRequest: BraintreePayPalRequest(
-                                          amount: transacAmount.toString(),
-                                          currencyCode: 'ZAR',
-                                          displayName: transacDisplayName,
-                                        ),
-                                      );
-                                      final dropInResult =
-                                          await BraintreeDropIn.start(
-                                              dropInRequest);
-                                      if (dropInResult == null) {
-                                        return;
-                                      }
-                                      showSnackbar(
-                                        context,
-                                        'Processing payment...',
-                                        duration: 10,
-                                        loading: true,
-                                      );
-                                      final paymentResponse =
-                                          await processBraintreePayment(
-                                        transacAmount,
-                                        dropInResult.paymentMethodNonce.nonce,
-                                        dropInResult.deviceData,
-                                      );
-                                      if (paymentResponse.errorMessage !=
-                                          null) {
-                                        showSnackbar(context,
-                                            'Error: ${paymentResponse.errorMessage}');
-                                        return;
-                                      }
-                                      showSnackbar(context, 'Success!');
-                                      _model.transactionId =
-                                          paymentResponse.transactionId!;
-
                                       _model.cartList =
                                           await queryCartRecordOnce(
                                         queryBuilder: (cartRecord) => cartRecord

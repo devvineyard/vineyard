@@ -12,6 +12,7 @@ import 'schema/verses_record.dart';
 import 'schema/vims_record.dart';
 import 'schema/lets_talk_record.dart';
 import 'schema/cart_record.dart';
+import 'schema/transactions_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -27,6 +28,7 @@ export 'schema/verses_record.dart';
 export 'schema/vims_record.dart';
 export 'schema/lets_talk_record.dart';
 export 'schema/cart_record.dart';
+export 'schema/transactions_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -282,6 +284,43 @@ Future<List<CartRecord>> queryCartRecordOnce({
     queryCollectionOnce(
       CartRecord.collection,
       CartRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query TransactionsRecords (as a Stream and as a Future).
+Future<int> queryTransactionsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      TransactionsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<TransactionsRecord>> queryTransactionsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      TransactionsRecord.collection,
+      TransactionsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<TransactionsRecord>> queryTransactionsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      TransactionsRecord.collection,
+      TransactionsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

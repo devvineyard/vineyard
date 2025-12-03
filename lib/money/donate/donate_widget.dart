@@ -1,11 +1,15 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/braintree/payment_manager.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
+import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,13 +40,13 @@ class _DonateWidgetState extends State<DonateWidget> {
     _model = createModel(context, () => DonateModel());
 
     _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.textFieldFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.refTextController ??= TextEditingController();
+    _model.refFocusNode ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
   }
 
   @override
@@ -1177,7 +1181,7 @@ class _DonateWidgetState extends State<DonateWidget> {
                             if (_model.isCustomSelected)
                               TextFormField(
                                 controller: _model.textController1,
-                                focusNode: _model.textFieldFocusNode1,
+                                focusNode: _model.textFieldFocusNode,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.textController1',
                                   Duration(milliseconds: 0),
@@ -1289,8 +1293,8 @@ class _DonateWidgetState extends State<DonateWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               TextFormField(
-                                controller: _model.textController2,
-                                focusNode: _model.textFieldFocusNode2,
+                                controller: _model.refTextController,
+                                focusNode: _model.refFocusNode,
                                 autofocus: false,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -1379,13 +1383,14 @@ class _DonateWidgetState extends State<DonateWidget> {
                                 maxLength: 20,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primary,
-                                validator: _model.textController2Validator
+                                validator: _model.refTextControllerValidator
                                     .asValidator(context),
                               ),
                               TextFormField(
-                                controller: _model.textController3,
-                                focusNode: _model.textFieldFocusNode3,
+                                controller: _model.emailTextController,
+                                focusNode: _model.emailFocusNode,
                                 autofocus: false,
+                                autofillHints: [AutofillHints.email],
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   labelText: 'Email',
@@ -1471,9 +1476,10 @@ class _DonateWidgetState extends State<DonateWidget> {
                                           .bodyMedium
                                           .fontStyle,
                                     ),
+                                keyboardType: TextInputType.emailAddress,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primary,
-                                validator: _model.textController3Validator
+                                validator: _model.emailTextControllerValidator
                                     .asValidator(context),
                               ),
                             ].divide(SizedBox(height: 20.0)),
@@ -1549,96 +1555,91 @@ class _DonateWidgetState extends State<DonateWidget> {
                         ),
                         FFButtonWidget(
                           onPressed: () async {
-                            var _shouldSetState = false;
-                            if ((currentUserEmail == null ||
-                                    currentUserEmail == '') &&
-                                (currentPhoneNumber == null ||
-                                    currentPhoneNumber == '')) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'You need an account to donate. Please create one, or log into an existing one.',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 10000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).secondary,
-                                ),
-                              );
-                              if (_shouldSetState) safeSetState(() {});
-                              return;
-                            }
                             _model.isFormValid = true;
                             if (_model.formKey.currentState == null ||
                                 !_model.formKey.currentState!.validate()) {
                               safeSetState(() => _model.isFormValid = false);
                               return;
                             }
-                            _shouldSetState = true;
                             if (_model.isFormValid!) {
-                              final transacAmount = _model.amount!;
-                              final transacDisplayName =
-                                  '${_model.textController2.text} ${currentUserUid}';
-                              if (kIsWeb) {
-                                showSnackbar(context,
-                                    'Payments not yet supported on web.');
-                                return;
-                              }
+                              _model.apiResult =
+                                  await InitializeTransactionCall.call(
+                                apiKey:
+                                    'sk_test_cf51228f84021b7728e907d110f63fc97f87409f',
+                                email: _model.emailTextController.text,
+                                amount: functions.incrementCartTotalValue(
+                                    100.0, _model.amount!),
+                                cURL:
+                                    'vineyardcomplete://vineyardcomplete.com/DonationConfirmationURL',
+                              );
 
-                              final dropInRequest = BraintreeDropInRequest(
-                                cardEnabled: true,
-                                clientToken: braintreeClientToken(),
-                                collectDeviceData: true,
-                                paypalRequest: BraintreePayPalRequest(
-                                  amount: transacAmount.toString(),
-                                  currencyCode: 'ZAR',
-                                  displayName: transacDisplayName,
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Status: ${(_model.apiResult?.statusCode ?? 200).toString()} , Suceeded: ${(_model.apiResult?.succeeded ?? true).toString()}',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
-                              final dropInResult =
-                                  await BraintreeDropIn.start(dropInRequest);
-                              if (dropInResult == null) {
-                                return;
-                              }
-                              showSnackbar(
-                                context,
-                                'Processing payment...',
-                                duration: 10,
-                                loading: true,
-                              );
-                              final paymentResponse =
-                                  await processBraintreePayment(
-                                transacAmount,
-                                dropInResult.paymentMethodNonce.nonce,
-                                dropInResult.deviceData,
-                              );
-                              if (paymentResponse.errorMessage != null) {
-                                showSnackbar(context,
-                                    'Error: ${paymentResponse.errorMessage}');
-                                return;
-                              }
-                              showSnackbar(context, 'Success!');
-                              _model.transactionId =
-                                  paymentResponse.transactionId!;
-
-                              _shouldSetState = true;
-
-                              context.goNamed(
-                                DonationConfirmationWidget.routeName,
-                                queryParameters: {
-                                  'amount': serializeParam(
-                                    _model.amount,
-                                    ParamType.double,
+                              if ((_model.apiResult?.statusCode ?? 200) ==
+                                  200) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'So far, so good',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
                                   ),
-                                  'ref': serializeParam(
-                                    _model.textController2.text,
-                                    ParamType.String,
+                                );
+
+                                await TransactionsRecord.collection.doc().set({
+                                  ...createTransactionsRecordData(
+                                    userID: currentUserReference,
+                                    amount: _model.amount,
+                                    referenceID:
+                                        InitializeTransactionCall.refID(
+                                      (_model.apiResult?.jsonBody ?? ''),
+                                    ),
+                                    type: TransactionType.Donation,
                                   ),
-                                }.withoutNulls,
-                              );
+                                  ...mapToFirestore(
+                                    {
+                                      'dateCreated':
+                                          FieldValue.serverTimestamp(),
+                                    },
+                                  ),
+                                });
+                                await launchURL(InitializeTransactionCall.url(
+                                  (_model.apiResult?.jsonBody ?? ''),
+                                )!);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'We\'re unable to process your payment at the moment. Please check your connection and try again later.',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).error,
+                                  ),
+                                );
+                              }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -1656,7 +1657,7 @@ class _DonateWidgetState extends State<DonateWidget> {
                               );
                             }
 
-                            if (_shouldSetState) safeSetState(() {});
+                            safeSetState(() {});
                           },
                           text: 'Donate Now',
                           options: FFButtonOptions(
