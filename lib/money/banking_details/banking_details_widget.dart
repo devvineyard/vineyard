@@ -33,7 +33,7 @@ class BankingDetailsWidget extends StatefulWidget {
   });
 
   final double? amount;
-  final Source? source;
+  final PaymentSource? source;
   final String? address;
   final String? fullname;
   final String? phone;
@@ -854,7 +854,7 @@ class _BankingDetailsWidgetState extends State<BankingDetailsWidget> {
                   Expanded(
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (widget!.source == Source.donations) {
+                        if (widget!.source == PaymentSource.donations) {
                           context.goNamed(
                             DonationConfirmationWidget.routeName,
                             queryParameters: {

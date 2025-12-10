@@ -237,7 +237,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'amount',
               ParamType.double,
             ),
-            source: params.getParam<Source>(
+            source: params.getParam<PaymentSource>(
               'source',
               ParamType.Enum,
             ),

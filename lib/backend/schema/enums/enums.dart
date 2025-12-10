@@ -5,7 +5,7 @@ enum TransactionType {
   BookPurchase,
 }
 
-enum Source {
+enum PaymentSource {
   donations,
   books,
 }
@@ -23,8 +23,8 @@ T? deserializeEnum<T>(String? value) {
   switch (T) {
     case (TransactionType):
       return TransactionType.values.deserialize(value) as T?;
-    case (Source):
-      return Source.values.deserialize(value) as T?;
+    case (PaymentSource):
+      return PaymentSource.values.deserialize(value) as T?;
     default:
       return null;
   }

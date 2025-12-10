@@ -1136,7 +1136,7 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
                                             ParamType.double,
                                           ),
                                           'source': serializeParam(
-                                            Source.books,
+                                            PaymentSource.books,
                                             ParamType.Enum,
                                           ),
                                           'address': serializeParam(

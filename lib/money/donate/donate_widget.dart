@@ -1354,7 +1354,7 @@ class _DonateWidgetState extends State<DonateWidget> {
                                   ParamType.double,
                                 ),
                                 'source': serializeParam(
-                                  Source.donations,
+                                  PaymentSource.donations,
                                   ParamType.Enum,
                                 ),
                               }.withoutNulls,
