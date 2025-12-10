@@ -1,14 +1,10 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
+import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -1132,72 +1128,40 @@ class _CheckoutLastPageWidgetState extends State<CheckoutLastPageWidget> {
                                       return;
                                     }
                                     if (_model.validationResult!) {
-                                      _model.cartList =
-                                          await queryCartRecordOnce(
-                                        queryBuilder: (cartRecord) => cartRecord
-                                            .where(
-                                              'userRef',
-                                              isEqualTo: currentUserReference,
-                                            )
-                                            .where(
-                                              'status',
-                                              isEqualTo: 'New',
-                                            ),
-                                      );
-                                      _model.currentDate = getCurrentTimestamp;
-                                      _model.guid =
-                                          functions.generateSortaGUID();
-                                      safeSetState(() {});
-                                      for (int loop1Index = 0;
-                                          loop1Index < _model.cartList!.length;
-                                          loop1Index++) {
-                                        final currentLoop1Item =
-                                            _model.cartList![loop1Index];
-
-                                        await currentLoop1Item.reference
-                                            .update(createCartRecordData(
-                                          status: 'Pending Delivery',
-                                          orderDate: _model.currentDate,
-                                          customerAddress:
-                                              _model.addressTextController.text,
-                                          acknowledgedAcknowledgement:
-                                              _model.checkboxValue,
-                                          fullName: _model
-                                              .fullNameTextController.text,
-                                          phoneNumber: _model
-                                              .phoneNumberTextController.text,
-                                          customerId:
-                                              _model.idTextController.text,
-                                          batchGUID: _model.guid,
-                                          totalPrice: FFAppState().cartTotal,
-                                          totalQuantity:
-                                              FFAppState().cartTotalQuantity,
-                                        ));
-
-                                        await currentUserReference!.update({
-                                          ...mapToFirestore(
-                                            {
-                                              'cartBooksRef':
-                                                  FieldValue.arrayRemove(
-                                                      [currentLoop1Item.id]),
-                                            },
+                                      context.pushNamed(
+                                        BankingDetailsWidget.routeName,
+                                        queryParameters: {
+                                          'amount': serializeParam(
+                                            FFAppState().cartTotal,
+                                            ParamType.double,
                                           ),
-                                        });
-                                      }
-                                      FFAppState().cartTotal = 100.0;
-                                      FFAppState().cartTotalQuantity = 0;
-                                      safeSetState(() {});
-                                      _model.usersList =
-                                          await queryUsersRecordOnce(
-                                        queryBuilder: (usersRecord) =>
-                                            usersRecord.where(
-                                          'is_admin',
-                                          isEqualTo: true,
-                                        ),
+                                          'source': serializeParam(
+                                            Source.books,
+                                            ParamType.Enum,
+                                          ),
+                                          'address': serializeParam(
+                                            _model.addressTextController.text,
+                                            ParamType.String,
+                                          ),
+                                          'fullname': serializeParam(
+                                            _model.fullNameTextController.text,
+                                            ParamType.String,
+                                          ),
+                                          'phone': serializeParam(
+                                            _model
+                                                .phoneNumberTextController.text,
+                                            ParamType.String,
+                                          ),
+                                          'id': serializeParam(
+                                            _model.idTextController.text,
+                                            ParamType.String,
+                                          ),
+                                          'email': serializeParam(
+                                            _model.emailTextController.text,
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
                                       );
-
-                                      context.goNamed(
-                                          OrderHistoryWidget.routeName);
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(

@@ -216,10 +216,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'amount',
               ParamType.double,
             ),
-            ref: params.getParam(
-              'ref',
-              ParamType.String,
-            ),
           ),
         ),
         FFRoute(
@@ -228,41 +224,44 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LocationWidget(),
         ),
         FFRoute(
-          name: PhoneSignInWidget.routeName,
-          path: PhoneSignInWidget.routePath,
-          builder: (context, params) => PhoneSignInWidget(),
-        ),
-        FFRoute(
-          name: VerifyPinWidget.routeName,
-          path: VerifyPinWidget.routePath,
-          builder: (context, params) => VerifyPinWidget(),
-        ),
-        FFRoute(
-          name: OrderHistoryURLWidget.routeName,
-          path: OrderHistoryURLWidget.routePath,
-          builder: (context, params) => OrderHistoryURLWidget(),
-        ),
-        FFRoute(
-          name: DonationConfirmationURLWidget.routeName,
-          path: DonationConfirmationURLWidget.routePath,
-          requireAuth: true,
-          builder: (context, params) => DonationConfirmationURLWidget(),
-        ),
-        FFRoute(
-          name: PaymentWidget.routeName,
-          path: PaymentWidget.routePath,
-          builder: (context, params) => PaymentWidget(
-            url: params.getParam(
-              'url',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
           name: DebugWidget.routeName,
           path: DebugWidget.routePath,
           builder: (context, params) =>
               params.isEmpty ? NavBarPage(initialPage: 'debug') : DebugWidget(),
+        ),
+        FFRoute(
+          name: BankingDetailsWidget.routeName,
+          path: BankingDetailsWidget.routePath,
+          builder: (context, params) => BankingDetailsWidget(
+            amount: params.getParam(
+              'amount',
+              ParamType.double,
+            ),
+            source: params.getParam<Source>(
+              'source',
+              ParamType.Enum,
+            ),
+            address: params.getParam(
+              'address',
+              ParamType.String,
+            ),
+            fullname: params.getParam(
+              'fullname',
+              ParamType.String,
+            ),
+            phone: params.getParam(
+              'phone',
+              ParamType.String,
+            ),
+            id: params.getParam(
+              'id',
+              ParamType.String,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

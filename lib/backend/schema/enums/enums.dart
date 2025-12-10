@@ -5,6 +5,11 @@ enum TransactionType {
   BookPurchase,
 }
 
+enum Source {
+  donations,
+  books,
+}
+
 extension FFEnumExtensions<T extends Enum> on T {
   String serialize() => name;
 }
@@ -18,6 +23,8 @@ T? deserializeEnum<T>(String? value) {
   switch (T) {
     case (TransactionType):
       return TransactionType.values.deserialize(value) as T?;
+    case (Source):
+      return Source.values.deserialize(value) as T?;
     default:
       return null;
   }

@@ -1,6 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
-import '/backend/backend.dart';
 import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -8,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/index.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -38,14 +35,8 @@ class _DonateWidgetState extends State<DonateWidget> {
     super.initState();
     _model = createModel(context, () => DonateModel());
 
-    _model.textController1 ??= TextEditingController();
+    _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-
-    _model.refTextController ??= TextEditingController();
-    _model.refFocusNode ??= FocusNode();
-
-    _model.emailTextController ??= TextEditingController();
-    _model.emailFocusNode ??= FocusNode();
   }
 
   @override
@@ -1179,14 +1170,14 @@ class _DonateWidgetState extends State<DonateWidget> {
                             ),
                             if (_model.isCustomSelected)
                               TextFormField(
-                                controller: _model.textController1,
+                                controller: _model.textController,
                                 focusNode: _model.textFieldFocusNode,
                                 onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController1',
+                                  '_model.textController',
                                   Duration(milliseconds: 0),
                                   () async {
                                     _model.amount = double.tryParse(
-                                        _model.textController1.text);
+                                        _model.textController.text);
                                     safeSetState(() {});
                                   },
                                 ),
@@ -1280,209 +1271,10 @@ class _DonateWidgetState extends State<DonateWidget> {
                                         decimal: true),
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primary,
-                                validator: _model.textController1Validator
+                                validator: _model.textControllerValidator
                                     .asValidator(context),
                               ),
                           ].divide(SizedBox(height: 16.0)),
-                        ),
-                        Form(
-                          key: _model.formKey,
-                          autovalidateMode: AutovalidateMode.disabled,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              TextFormField(
-                                controller: _model.refTextController,
-                                focusNode: _model.refFocusNode,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Referance',
-                                  hintText: 'Enter your donation referance',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                maxLength: 20,
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                validator: _model.refTextControllerValidator
-                                    .asValidator(context),
-                              ),
-                              TextFormField(
-                                controller: _model.emailTextController,
-                                focusNode: _model.emailFocusNode,
-                                autofocus: false,
-                                autofillHints: [AutofillHints.email],
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Email',
-                                  hintText:
-                                      'Enter your email address where we can send the receipt',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                keyboardType: TextInputType.emailAddress,
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                validator: _model.emailTextControllerValidator
-                                    .asValidator(context),
-                              ),
-                            ].divide(SizedBox(height: 20.0)),
-                          ),
                         ),
                       ]
                           .divide(SizedBox(height: 24.0))
@@ -1554,142 +1346,19 @@ class _DonateWidgetState extends State<DonateWidget> {
                         ),
                         FFButtonWidget(
                           onPressed: () async {
-                            _model.isFormValid = true;
-                            if (_model.formKey.currentState == null ||
-                                !_model.formKey.currentState!.validate()) {
-                              safeSetState(() => _model.isFormValid = false);
-                              return;
-                            }
-                            var confirmDialogResponse = await showDialog<bool>(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return WebViewAware(
-                                      child: AlertDialog(
-                                        title: Text('See this'),
-                                        content: Text(
-                                            'vineyardcomplete://vineyardcomplete.com${GoRouterState.of(context).uri.toString()}'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext, false),
-                                            child: Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext, true),
-                                            child: Text('Confirm'),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ) ??
-                                false;
-                            if (_model.isFormValid!) {
-                              _model.apiResult =
-                                  await InitializeTransactionCall.call(
-                                apiKey:
-                                    'sk_test_cf51228f84021b7728e907d110f63fc97f87409f',
-                                email: _model.emailTextController.text,
-                                amount: (_model.amount!) * 100,
-                                cURL:
-                                    'vineyardcomplete://vineyardcomplete.com/DonationConfirmationURL',
-                              );
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Status: ${(_model.apiResult?.statusCode ?? 200).toString()} , Suceeded: ${(_model.apiResult?.succeeded ?? true).toString()}',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).secondary,
+                            context.pushNamed(
+                              BankingDetailsWidget.routeName,
+                              queryParameters: {
+                                'amount': serializeParam(
+                                  _model.amount,
+                                  ParamType.double,
                                 ),
-                              );
-                              if ((_model.apiResult?.statusCode ?? 200) ==
-                                  200) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'So far, so good',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                      ),
-                                    ),
-                                    duration: Duration(milliseconds: 4000),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
-                                );
-
-                                await TransactionsRecord.collection.doc().set({
-                                  ...createTransactionsRecordData(
-                                    userID: currentUserReference,
-                                    amount: _model.amount,
-                                    referenceID:
-                                        InitializeTransactionCall.refID(
-                                      (_model.apiResult?.jsonBody ?? ''),
-                                    ),
-                                    type: TransactionType.Donation,
-                                  ),
-                                  ...mapToFirestore(
-                                    {
-                                      'dateCreated':
-                                          FieldValue.serverTimestamp(),
-                                    },
-                                  ),
-                                });
-
-                                context.pushNamed(
-                                  PaymentWidget.routeName,
-                                  queryParameters: {
-                                    'url': serializeParam(
-                                      InitializeTransactionCall.url(
-                                        (_model.apiResult?.jsonBody ?? ''),
-                                      ),
-                                      ParamType.String,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'We\'re unable to process your payment at the moment. Please check your connection and try again later.',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                      ),
-                                    ),
-                                    duration: Duration(milliseconds: 4000),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).error,
-                                  ),
-                                );
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Please ensure reference and email are captured',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).error,
+                                'source': serializeParam(
+                                  Source.donations,
+                                  ParamType.Enum,
                                 ),
-                              );
-                            }
-
-                            safeSetState(() {});
+                              }.withoutNulls,
+                            );
                           },
                           text: 'Donate Now',
                           options: FFButtonOptions(

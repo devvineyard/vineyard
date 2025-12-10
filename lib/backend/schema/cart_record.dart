@@ -107,6 +107,11 @@ class CartRecord extends FirestoreRecord {
   double get totalPrice => _totalPrice ?? 0.0;
   bool hasTotalPrice() => _totalPrice != null;
 
+  // "email" field.
+  String? _email;
+  String get email => _email ?? '';
+  bool hasEmail() => _email != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _price = castToType<double>(snapshotData['price']);
@@ -127,6 +132,7 @@ class CartRecord extends FirestoreRecord {
     _batchGUID = snapshotData['batch_GUID'] as String?;
     _totalQuantity = castToType<int>(snapshotData['total_quantity']);
     _totalPrice = castToType<double>(snapshotData['total_price']);
+    _email = snapshotData['email'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -181,6 +187,7 @@ Map<String, dynamic> createCartRecordData({
   String? batchGUID,
   int? totalQuantity,
   double? totalPrice,
+  String? email,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -202,6 +209,7 @@ Map<String, dynamic> createCartRecordData({
       'batch_GUID': batchGUID,
       'total_quantity': totalQuantity,
       'total_price': totalPrice,
+      'email': email,
     }.withoutNulls,
   );
 
@@ -230,7 +238,8 @@ class CartRecordDocumentEquality implements Equality<CartRecord> {
         e1?.customerId == e2?.customerId &&
         e1?.batchGUID == e2?.batchGUID &&
         e1?.totalQuantity == e2?.totalQuantity &&
-        e1?.totalPrice == e2?.totalPrice;
+        e1?.totalPrice == e2?.totalPrice &&
+        e1?.email == e2?.email;
   }
 
   @override
@@ -252,7 +261,8 @@ class CartRecordDocumentEquality implements Equality<CartRecord> {
         e?.customerId,
         e?.batchGUID,
         e?.totalQuantity,
-        e?.totalPrice
+        e?.totalPrice,
+        e?.email
       ]);
 
   @override

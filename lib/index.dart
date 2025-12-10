@@ -26,11 +26,6 @@ export '/pages/services/services_widget.dart' show ServicesWidget;
 export '/money/donation_confirmation/donation_confirmation_widget.dart'
     show DonationConfirmationWidget;
 export '/pages/location/location_widget.dart' show LocationWidget;
-export '/login/phone_sign_in/phone_sign_in_widget.dart' show PhoneSignInWidget;
-export '/login/verify_pin/verify_pin_widget.dart' show VerifyPinWidget;
-export '/money/order_history_u_r_l/order_history_u_r_l_widget.dart'
-    show OrderHistoryURLWidget;
-export '/money/donation_confirmation_u_r_l/donation_confirmation_u_r_l_widget.dart'
-    show DonationConfirmationURLWidget;
-export '/money/payment/payment_widget.dart' show PaymentWidget;
 export '/debug/debug_widget.dart' show DebugWidget;
+export '/money/banking_details/banking_details_widget.dart'
+    show BankingDetailsWidget;

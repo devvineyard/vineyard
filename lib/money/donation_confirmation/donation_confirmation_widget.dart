@@ -16,11 +16,9 @@ class DonationConfirmationWidget extends StatefulWidget {
   const DonationConfirmationWidget({
     super.key,
     required this.amount,
-    required this.ref,
   });
 
   final double? amount;
-  final String? ref;
 
   static String routeName = 'DonationConfirmation';
   static String routePath = '/donationConfirmation';
@@ -219,72 +217,6 @@ class _DonationConfirmationWidgetState
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Payment Reference:',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                  Text(
-                                    valueOrDefault<String>(
-                                      widget!.ref,
-                                      'Thank you for everything',
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
                                     'Date:',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -353,7 +285,7 @@ class _DonationConfirmationWidgetState
                                 color: FlutterFlowTheme.of(context).alternate,
                               ),
                               Text(
-                                'Your donation will help support our community outreach programs, youth ministries, and facility maintenance. A receipt has been sent to your email address.',
+                                'Your donation will help support our community outreach programs, youth ministries, and facility maintenance.',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall

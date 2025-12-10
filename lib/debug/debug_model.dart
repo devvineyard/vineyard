@@ -6,6 +6,7 @@ import 'debug_widget.dart' show DebugWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DebugModel extends FlutterFlowModel<DebugWidget> {
   @override
